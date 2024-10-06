@@ -1,0 +1,30 @@
+MODEL:
+  NUM_CLASSES: 10
+  META_ARCHITECTURE: 'SSDTMAPANDetector'
+  BOX_HEAD:
+#    PREDICTOR: 'SSDLiteBoxPredictor'
+    PREDICTOR: 'SSDBoxPredictor'
+#    NAME: 'SSDBoxRPNHead'
+  BACKBONE:
+    NAME: 'resnet_pan'
+    OUT_CHANNELS: (512, 1024, 2048)
+  PRIORS:
+    FEATURE_MAPS: [40, 20, 10]
+    STRIDES: [8, 16, 32]
+    MIN_SIZES: [20, 60, 105]
+    MAX_SIZES: [50, 105, 150]
+    ASPECT_RATIOS: [[2, 3], [2, 3], [2, 3]]
+    BOXES_PER_LOCATION: [6, 6, 6]
+INPUT:
+  IMAGE_SIZE: 320
+DATASETS:
+  TRAIN: ("dark_vid_train", "dark_vid_val")
+  TEST: ("dark_vid_test", )
+SOLVER:
+  MAX_ITER: 300000
+  LR_STEPS: [20000]
+  GAMMA: 0.5
+  BATCH_SIZE: 8
+  LR: 5e-4
+
+OUTPUT_DIR: 'outputs/resnet_ssd320_dark_vid_carotid_pan_0208'

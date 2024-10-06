@@ -1,0 +1,29 @@
+MODEL:
+  NUM_CLASSES: 3
+  BOX_HEAD:
+    PREDICTOR: 'SSDLiteBoxPredictor'
+#    PREDICTOR: 'SSDBoxPredictor'
+#    NAME: 'SSDBoxRPNHead'
+  BACKBONE:
+    NAME: 'resnet_50'
+    OUT_CHANNELS: (1024, 512, 256)
+  PRIORS:
+    FEATURE_MAPS: [20, 10, 5]
+    STRIDES: [16, 32, 64]
+    MIN_SIZES: [60, 105, 150]
+    MAX_SIZES: [105, 150, 195]
+    ASPECT_RATIOS: [[2, 3], [2, 3], [2, 3]]
+    BOXES_PER_LOCATION: [6, 6, 6]
+INPUT:
+  IMAGE_SIZE: 320
+DATASETS:
+  TRAIN: ("coco_vid_train", "coco_vid_val")
+  TEST: ("coco_vid_test", )
+SOLVER:
+  MAX_ITER: 300000
+  LR_STEPS: [20000]
+  GAMMA: 0.1
+  BATCH_SIZE: 1
+  LR: 5e-5
+
+OUTPUT_DIR: 'outputs/resnet_ssd320_coco_vid_carotid_large_heads'

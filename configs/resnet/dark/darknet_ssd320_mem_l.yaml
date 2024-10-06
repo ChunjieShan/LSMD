@@ -1,0 +1,37 @@
+MODEL:
+  NUM_CLASSES: 6
+  META_ARCHITECTURE: 'SSDLSTPANDetector'
+  BOX_HEAD:
+    #    PREDICTOR: 'SSDLiteBoxPredictor'
+    PREDICTOR: 'SSDBoxPredictor'
+  #    NAME: 'SSDBoxRPNHead'
+  BACKBONE:
+    NAME: 'darknet_stam_pan'
+    OUT_CHANNELS: (256, 512, 1024)
+    WIDTH: 1.0
+    DEPTH: 1.0
+    PRETRAINED: "./checkpoints/0727/darknet_stam_l.pth"
+  PRIORS:
+    FEATURE_MAPS: [ 40, 20, 10 ]
+    STRIDES: [ 8, 16, 32 ]
+    MIN_SIZES: [ 21, 45, 99 ]
+    MAX_SIZES: [ 45, 99, 153 ]
+    ASPECT_RATIOS: [ [ 2, 3 ], [ 2, 3 ], [ 2, 3 ] ]
+    BOXES_PER_LOCATION: [ 6, 6, 6 ]
+INPUT:
+  IMAGE_SIZE: 320
+DATASETS:
+  TRAIN: ("dark_vid_train", )
+  TEST: ("dark_vid_test", )
+  FRAME_LENGTH: 3
+SOLVER:
+  NUM_PREV_CLIPS: 5
+  MAX_ITER: 300000
+  LR_STEPS: [ 5000 ]
+  GAMMA: 0.5
+  BATCH_SIZE: 12
+  LR: 8e-4
+TEST:
+  CONFIDENCE_THRESHOLD: 0.2
+
+OUTPUT_DIR: 'outputs/240727_carotid_l'

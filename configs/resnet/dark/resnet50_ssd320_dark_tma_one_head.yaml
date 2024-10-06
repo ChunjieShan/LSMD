@@ -1,0 +1,31 @@
+MODEL:
+  NUM_CLASSES: 2
+  META_ARCHITECTURE: 'SSDTMADetector'
+  BOX_HEAD:
+#    PREDICTOR: 'SSDLiteBoxPredictor'
+    PREDICTOR: 'SSDBoxPredictor'
+#    NAME: 'SSDBoxRPNHead'
+  BACKBONE:
+    NAME: 'resnet_50'
+    OUT_CHANNELS: (2048,)
+    PRETRAINED: False
+  PRIORS:
+    FEATURE_MAPS: [10]
+    STRIDES: [32]
+    MIN_SIZES: [105]
+    MAX_SIZES: [150]
+    ASPECT_RATIOS: [[2, 3]]
+    BOXES_PER_LOCATION: [6]
+INPUT:
+  IMAGE_SIZE: 320
+DATASETS:
+  TRAIN: ("dark_vid_train", "dark_vid_val")
+  TEST: ("dark_vid_test", )
+SOLVER:
+  MAX_ITER: 300000
+  LR_STEPS: [20000]
+  GAMMA: 0.5
+  BATCH_SIZE: 1
+  LR: 1e-4
+
+OUTPUT_DIR: 'outputs/resnet_ssd320_dark_tma_carotid_one_head_0207'
